@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnYourFood;
     ImageView image;
     static String data = "";
-    OkHttpClient client = new OkHttpClient();
+    public OkHttpClient client = new OkHttpClient();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

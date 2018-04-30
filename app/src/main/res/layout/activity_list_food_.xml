@@ -7,7 +7,22 @@
     tools:context="com.tran.huunghia.ifood.ListFood_Activity">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:background="#a2fde2"
+        android:layout_width="250dp"
+        android:layout_height="40dp" />
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:id="@+id/btnSearch"
+        android:text="SEARCH"
+
+        android:layout_marginLeft="250dp"/>
+
+
 </RelativeLayout>
