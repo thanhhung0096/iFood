@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.tran.huunghia.ifood.ListFood_Activity">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_marginTop="50dp"
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:background="#a2fde2"
+            android:layout_width="250dp"
+            android:layout_height="40dp" />
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:id="@+id/btnSearch"
+            android:text="SEARCH"
+
+            android:layout_marginLeft="250dp"/>
+    </RelativeLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/nav_menu"></android.support.design.widget.NavigationView>
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:background="#a2fde2"
-        android:layout_width="250dp"
-        android:layout_height="40dp" />
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:id="@+id/btnSearch"
-        android:text="SEARCH"
-
-        android:layout_marginLeft="250dp"/>
-
-
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

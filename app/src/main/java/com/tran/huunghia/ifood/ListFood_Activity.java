@@ -1,15 +1,21 @@
 package com.tran.huunghia.ifood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -32,19 +38,30 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ListFood_Activity extends AppCompatActivity {
+public class ListFood_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button btnSearch;
     SearchView searchView;
     String Result = "";
     public static Boolean got = false;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
+    public static String data2 = "";
+    public static int num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_food_);
-
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
         searchView = (SearchView) findViewById(R.id.searchView);
         btnSearch = (Button) findViewById(R.id.btnSearch);
+
         View_init(MainActivity.data);
         btnSearch.setOnClickListener(new View.OnClickListener() {
 
@@ -53,6 +70,7 @@ public class ListFood_Activity extends AppCompatActivity {
                 Search();
             }
         });
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -111,6 +129,40 @@ public class ListFood_Activity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        Intent i = new Intent(this, ListFood_Activity.class);
+
+        if (id == R.id.bookmark) {
+            Toast.makeText(this, "0", Toast.LENGTH_SHORT).show();
+        }
+        if (id == R.id.home) {
+            startActivity(i);
+        }
+        if (id == R.id.categories) {
+            num = 2;
+            View_init(data2);
+            startActivity(i);
+        }
+        if (id == R.id.ingredients) {
+
+        }
+        if (id == R.id.about) {
+            Toast.makeText(this, "Nhom 5", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+
 
     public class OkHttpHandler extends AsyncTask<String, Void, String> {
 
