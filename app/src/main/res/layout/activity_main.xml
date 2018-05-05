@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.tran.huunghia.ifood.MainActivity">
@@ -10,24 +11,16 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp"
+        android:layout_centerVertical="true"
         app:srcCompat="@drawable/logo" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnListFood"
-        android:text="LIST FOOD"
+        android:text="Cook now!"
         android:textSize="30dp"
-        android:layout_marginTop="250dp"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnYourFood"
-        android:text="YOUR FOODS"
-        android:textSize="30dp"
-        android:layout_marginTop="300dp"/>
+        android:layout_alignParentBottom="true"
+        style="@style/Widget.AppCompat.Button.Colored"/>
 
 </RelativeLayout>

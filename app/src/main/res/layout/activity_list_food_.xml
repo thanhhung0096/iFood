@@ -7,35 +7,43 @@
     android:layout_height="match_parent"
     tools:context="com.tran.huunghia.ifood.ListFood_Activity">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_marginTop="50dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/simpleSwipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <SearchView
-            android:id="@+id/searchView"
-            android:background="#a2fde2"
-            android:layout_width="250dp"
-            android:layout_height="40dp" />
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:id="@+id/btnSearch"
-            android:text="SEARCH"
 
-            android:layout_marginLeft="250dp"/>
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp" />
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:background="#ffff"/>
+
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="250dp"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:text="SEARCH" />
+        </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/nav_menu"></android.support.design.widget.NavigationView>
+        app:menu="@menu/nav_menu" />
 
 </android.support.v4.widget.DrawerLayout>

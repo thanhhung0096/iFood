@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#3b4ad4</color>
+    <color name="colorPrimaryDark">#1228b7</color>
+    <color name="colorAccent">#ff40b6</color>
+    <color name="colorPrimaryMyApp">#a52828</color>
+    <color name="colorPrimaryDarkMyApp">#a52828</color>
+    <color name="colorAccentMyApp">#a52828</color>
+    <color name="primary_dark_material_light_toolbar">#a52828</color>
+    <color name="accent_material_light_toolbar">#a52828</color>
+    <color name="primary_material_light_toolbar">#ffffff</color>
+    <color name="primary_material_dark">#a52828</color>
+    <color name="primary_dark_material_dark">#a52828</color>
+    <color name="accent_material_dark">#a52828</color>
+
 </resources>

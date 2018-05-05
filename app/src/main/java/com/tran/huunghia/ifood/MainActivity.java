@@ -15,9 +15,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+//TODO: Handle to save data into db or Files and SharePreference by Nghia
 public class MainActivity extends AppCompatActivity {
     Button btnListFood;
-    Button btnYourFood;
     ImageView image;
     static String data = "";
     public OkHttpClient client = new OkHttpClient();
@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnListFood = (Button)findViewById(R.id.btnListFood);
-        btnYourFood = (Button)findViewById(R.id.btnYourFood);
         image = (ImageView)findViewById(R.id.imageView);
         try
         {
