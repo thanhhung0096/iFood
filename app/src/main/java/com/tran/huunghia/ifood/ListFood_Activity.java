@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +29,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -44,13 +48,14 @@ public class ListFood_Activity extends AppCompatActivity implements NavigationVi
     public static String data2 = "";
     public static int num;
     public static String dataFromURL;
+    DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_food_);
-
-        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        Realm.init(this);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
@@ -181,27 +186,43 @@ public class ListFood_Activity extends AppCompatActivity implements NavigationVi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         Intent i = new Intent(this, ListFood_Activity.class);
+        switch (id)
+        {
+            case R.id.home:
+                startActivity(i);
+                break;
+            case R.id.collection:
+                Realm.init(this);
+                updateFavoriteList();
+                // implement setOnRefreshListener event on SwipeRefreshLayout
+                swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        // cancel the Visual indication of a refresh
+                        swipeRefreshLayout.setRefreshing(false);
+                        updateFavoriteList();
+                    }
+                });
+                break;
+            case R.id.schedule:
 
-        if (id == R.id.home) {
-            startActivity(i);
+                break;
+            case R.id.about:
+                Toast.makeText(this, "Nhom 5", Toast.LENGTH_SHORT).show();
+                break;
         }
-//        TODO: Handle download video by Hung
-        if (id == R.id.collection) {
-            num = 2;
-            View_init(data2);
-            startActivity(i);
-        }
-//        TODO: Handle make schedule meals for cook by Bao
-        if (id == R.id.schedule){
-
-        }
-        if (id == R.id.about) {
-            Toast.makeText(this, "Nhom 5", Toast.LENGTH_SHORT).show();
-        }
+        mDrawerLayout.closeDrawer(Gravity.START);
         return true;
     }
 
-
+    public void updateFavoriteList()
+    {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Food> rs = realm.where(Food.class).findAll();
+        List<Food> listFavorite = realm.copyFromRealm(rs);
+        Food_Adapter food_adapter = new Food_Adapter((ArrayList<Food>) listFavorite, getApplicationContext());
+        recyclerView.setAdapter(food_adapter);
+    }
     public class OkHttpHandler extends AsyncTask<String, Void, String> {
 
         OkHttpClient client = new OkHttpClient();

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import java.io.IOException;
 
+import io.realm.Realm;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Realm.init(this);
+
         btnListFood = (Button)findViewById(R.id.btnListFood);
         image = (ImageView)findViewById(R.id.imageView);
         try

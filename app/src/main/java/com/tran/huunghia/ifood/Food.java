@@ -1,11 +1,18 @@
 package com.tran.huunghia.ifood;
 
+import java.io.Serializable;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by user on 29/04/2018.
  */
 
-public class Food {
+public class Food extends RealmObject implements Serializable{
     private int idMeal;
+    boolean favorite = false;
+
     private String strMeal;
     private String strCategory;
     private String strArea;
@@ -499,11 +506,14 @@ public class Food {
         this.strMeasure20 = strMeasure20;
         this.strSource = strSource;
     }
+    public Food(){}
 
-    public Food(String strMeal, String strArea, String strMealThumb) {
-        this.strMeal = strMeal;
-        this.strArea = strArea;
-        this.strMealThumb = strMealThumb;
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }
 
