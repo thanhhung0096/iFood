@@ -11,6 +11,6 @@
         android:padding="10dp"
         android:textColor="@android:color/white"
         android:text="ExpandableLayout Header!"
-        android:gravity="center"/>
+        android:drawableStart="@drawable/ic_turned_in_not_white_24dp"/>
 
 </RelativeLayout>
