@@ -24,13 +24,13 @@ import io.realm.RealmResults;
 public class Food_Detail_Activity extends AppCompatActivity {
     ImageView imageMeal;
     TextView foodName;
-    String ingredients;
+    String ingredients = "";
     String instructions;
     String area;
     String category;
     Food food;
-    Intent i ;
-    private final String[] array = {"Ingredients","Instructions","Area","Category"};
+    Intent i;
+    private final String[] array = {" Ingredients", " Instructions", " Area", " Category"};
     private final String[] arrayTemp = new String[4];
 
     @Override
@@ -89,8 +89,7 @@ public class Food_Detail_Activity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.action_bar, menu);
 
 //        food = (Food) i.getSerializableExtra("food");
-        if (food.isFavorite())
-        {
+        if (food.isFavorite()) {
             menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_white_24dp);
         }
         return true;
@@ -101,8 +100,7 @@ public class Food_Detail_Activity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_favorite:
-                if (!food.isFavorite())
-                {
+                if (!food.isFavorite()) {
                     //TODO: Handle to add favourite meal into user device using db or Files by Hung
                     food.setFavorite(true);
                     item.setIcon(R.drawable.ic_favorite_white_24dp);
@@ -111,9 +109,7 @@ public class Food_Detail_Activity extends AppCompatActivity {
                     Food foodRealm = realm.copyToRealm(food);
                     realm.commitTransaction();
                     Toast.makeText(this, "Favourite", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     food.setFavorite(false);
                     item.setIcon(R.drawable.ic_favorite_border_white_24dp);
                     //delete from Realm
@@ -121,7 +117,7 @@ public class Food_Detail_Activity extends AppCompatActivity {
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-                            RealmResults<Food> rs = realm.where(Food.class).equalTo("idMeal",food.getIdMeal()).findAll();
+                            RealmResults<Food> rs = realm.where(Food.class).equalTo("idMeal", food.getIdMeal()).findAll();
                             rs.deleteAllFromRealm();
                         }
                     });
@@ -134,12 +130,11 @@ public class Food_Detail_Activity extends AppCompatActivity {
         return true;
     }
 
-    public boolean checkFavorited(Food f)
-    {
+    public boolean checkFavorited(Food f) {
         Realm.init(this);
         Realm r = Realm.getDefaultInstance();
-        RealmResults<Food> rs = r.where(Food.class).equalTo("idMeal",f.getIdMeal()).findAll();
-        if(rs.size() >0)
+        RealmResults<Food> rs = r.where(Food.class).equalTo("idMeal", f.getIdMeal()).findAll();
+        if (rs.size() > 0)
             return true;
         return false;
     }
