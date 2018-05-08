@@ -101,7 +101,8 @@ public class Food_Detail_Activity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_favorite:
                 if (!food.isFavorite()) {
-                    //TODO: Handle to add favourite meal into user device using db or Files by Hung
+
+                    //Handle to add favourite meal into user device using db or Files by Hung
                     food.setFavorite(true);
                     item.setIcon(R.drawable.ic_favorite_white_24dp);
                     Realm realm = Realm.getDefaultInstance();

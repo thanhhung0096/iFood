@@ -7,37 +7,30 @@
     android:layout_height="match_parent"
     tools:context="com.tran.huunghia.ifood.ListFood_Activity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/simpleSwipeRefreshLayout"
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp" />
+                app:tabMode="fixed"
+                app:tabGravity="fill"/>
+        </android.support.design.widget.AppBarLayout>
 
-            <SearchView
-                android:id="@+id/searchView"
-                android:layout_width="250dp"
-                android:layout_height="40dp"
-                android:background="#ffff"/>
-
-            <Button
-                android:id="@+id/btnSearch"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="250dp"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:text="SEARCH" />
-        </RelativeLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
