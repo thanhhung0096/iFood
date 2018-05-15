@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -47,29 +48,34 @@ public class ListFood_Activity extends AppCompatActivity implements NavigationVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_food_);
 
-        try {
-            getHottestFoodFromURL();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Realm.init(this);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        //Handling ViewPager
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        addTabs(viewPager);
+//        Toast.makeText(this,MainActivity.data,Toast.LENGTH_LONG).show();
 
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
+            try {
+                getHottestFoodFromURL();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+            mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+            mDrawerLayout.addDrawerListener(mToggle);
+            mToggle.syncState();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+            navigationView.setNavigationItemSelectedListener(this);
+
+            //Handling ViewPager
+            viewPager = (ViewPager) findViewById(R.id.viewpager);
+            addTabs(viewPager);
+
+
+            tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(viewPager);
+            setupTabIcons();
+
+//            Toast.makeText(this, HomeFragment.listFood.size(),Toast.LENGTH_LONG).show();
+
+
     }
 
     private void setupTabIcons() {
@@ -108,11 +114,6 @@ public class ListFood_Activity extends AppCompatActivity implements NavigationVi
         public void addFrag(Fragment fragment) {
             mFragmentList.add(fragment);
         }
-
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            return mFragmentTitleList.get(position);
-//        }
     }
 
     public void getHottestFoodFromURL() throws IOException {

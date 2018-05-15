@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@drawable/custom_item_layout"
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/imgMeal"
         android:layout_alignParentTop="true"
-        android:layout_width="150dp"
-        android:layout_height="150dp" />
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:scaleType="fitXY"/>
     <TextView
         android:id="@+id/tvNameMeal"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="40dp"
-        android:textSize="20dp"
+        android:layout_below="@+id/imgMeal"
+        android:textSize="20sp"
         android:textColor="#ff0000"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"/>
     <TextView
         android:id="@+id/tvArea"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="80dp"
-        android:textSize="20dp"
+        android:layout_below="@+id/tvNameMeal"
+        android:textSize="20sp"
         android:textColor="#0b19e6"
-
-
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </RelativeLayout>

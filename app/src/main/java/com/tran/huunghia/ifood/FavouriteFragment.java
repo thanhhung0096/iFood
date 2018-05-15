@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,16 +40,20 @@ public class FavouriteFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_favourite, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.simpleSwipeRefreshLayoutFavourite);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_favourite);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+//        recyclerView.setHasFixedSize(true);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),
+//                LinearLayoutManager.VERTICAL, false);
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//
+//        //Custom Design View in Layout Manager
+//        DividerItemDecoration dividerItemDecoration = new
+//                DividerItemDecoration(getActivity(),
+//                linearLayoutManager.getOrientation());
+//        recyclerView.addItemDecoration(dividerItemDecoration);
 
-        //Custom Design View in Layout Manager
-        DividerItemDecoration dividerItemDecoration = new
-                DividerItemDecoration(getActivity(),
-                linearLayoutManager.getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        // set a GridLayoutManager with default vertical orientation and 2 number of columns
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
+        recyclerView.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
 
         Realm.init(getActivity());
         updateFavoriteList();

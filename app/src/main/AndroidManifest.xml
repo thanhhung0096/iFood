@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/MyTheme"
         tools:replace="android:icon">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/MyTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,10 +22,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListFood_Activity"
-            android:theme="@style/MyTheme"/>
-        <activity android:name=".Food_Detail_Activity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
+            android:name=".ListFood_Activity"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".Food_Detail_Activity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".test_category"></activity>
     </application>
 
 </manifest>

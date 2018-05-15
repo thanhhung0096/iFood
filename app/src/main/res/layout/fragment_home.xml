@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.tran.huunghia.ifood.HomeFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -13,6 +14,15 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
+            <com.victor.loading.rotate.RotateLoading
+                android:id="@+id/rotateloading"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                app:loading_speed="11"
+                app:loading_width="5dp"
+                app:loading_color="@color/colorPrimaryDarkMyApp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_home"
