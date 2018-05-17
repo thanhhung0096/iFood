@@ -1,6 +1,7 @@
 package com.tran.huunghia.ifood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.ViewHolder> {
     private ArrayList<Category> listCategory;
-    Context context;
+    private Context context;
 
     public Category_Adapter(ArrayList<Category> listCategory, Context context) {
         this.listCategory = listCategory;
@@ -39,7 +40,6 @@ public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Picasso.get().load(listCategory.get(position).getStrCategoryThumb()).into(holder.imgCategory);
         holder.tvNameCategory.setText(listCategory.get(position).getStrCategory());
-        holder.tvDecriptionCategory.setText(listCategory.get(position).getStrCategoryDescription());
     }
 
     @Override
@@ -50,18 +50,21 @@ public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imgCategory;
         TextView tvNameCategory;
-        TextView tvDecriptionCategory;
+
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             imgCategory = (ImageView) itemView.findViewById(R.id.imgCategory);
-            tvNameCategory =  (TextView)itemView.findViewById(R.id.tvNameCategory);
-            tvDecriptionCategory =  (TextView)itemView.findViewById(R.id.tvDecriptionCategory);
-
+            tvNameCategory = (TextView) itemView.findViewById(R.id.tvNameCategory);
         }
 
         @Override
         public void onClick(View v) {
-
+            int position = getLayoutPosition();
+            Category category = listCategory.get(position);
+            Intent i = new Intent(context, CategoryDetail.class);
+            i.putExtra("category", category);
+            context.startActivity(i);
         }
     }
 }

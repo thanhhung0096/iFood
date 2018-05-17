@@ -20,7 +20,10 @@
         android:id="@+id/btnListFood"
         android:text="Cook now!"
         android:textSize="30dp"
-        android:layout_alignParentBottom="true"
-        style="@style/Widget.AppCompat.Button.Colored"/>
+        android:textStyle="bold"
+        android:fontFamily="serif"
+        android:textColor="@color/colorPrimaryDarkMyApp"
+        android:background="#ffff"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

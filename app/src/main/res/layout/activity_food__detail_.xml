@@ -25,8 +25,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/img_detail"
+        <fragment
+            android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
+            android:id="@+id/youtubeView"
             android:layout_width="match_parent"
             android:layout_height="260dp"
             android:scaleType="fitXY"
@@ -34,11 +35,13 @@
 
         <TextView
             android:id="@+id/food_name"
-            android:layout_below="@+id/img_detail"
+            android:layout_below="@+id/youtubeView"
             android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30dp"
+            android:textStyle="bold"
+            android:fontFamily="monospace"
             android:textColor="@android:color/white"
             android:background="#a52828"/>
 

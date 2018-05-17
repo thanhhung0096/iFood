@@ -4,25 +4,32 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andexert.expandablelayout.library.ExpandableLayoutListView;
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class Food_Detail_Activity extends AppCompatActivity {
-    ImageView imageMeal;
+public class Food_Detail_Activity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
+//    ImageView imageMeal;
+//    YouTubePlayerView youTubePlayerView;
+    String keyVideo="";
     TextView foodName;
     String ingredients = "";
     String instructions;
@@ -33,14 +40,25 @@ public class Food_Detail_Activity extends AppCompatActivity {
     private final String[] array = {" Ingredients", " Instructions", " Area", " Category"};
     private final String[] arrayTemp = new String[4];
 
+    String API_KEY = "AIzaSyCEQ0NAhUY8EF3aLBqLtqlLhiR9A4GilE8";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food__detail_);
+
+        YouTubePlayerSupportFragment frag =
+                (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtubeView);
+        frag.initialize( API_KEY, this);
+
         i = this.getIntent();
         food = (Food) i.getSerializableExtra("food");
+
+        keyVideo = getYoutubeVideoId(food.getStrYoutube());
+
+
         food.setFavorite(checkFavorited(food));
-        imageMeal = (ImageView) findViewById(R.id.img_detail);
+//        youTubePlayerView = (YouTubePlayerView) findViewById(R.id.youtubeView);
+
         foodName = (TextView) findViewById(R.id.food_name);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -48,7 +66,7 @@ public class Food_Detail_Activity extends AppCompatActivity {
         String temp = food.getStrMeal();
         myToolbar.setSubtitle(temp);
         foodName.setText(temp);
-        Picasso.get().load(food.getStrMealThumb()).into(imageMeal);
+//        Picasso.get().load(food.getStrMealThumb()).into(imageMeal);
 
         for (int j = 1; j < 21; j++) {
             String nameMethod = "getStrIngredient" + j;
@@ -109,7 +127,8 @@ public class Food_Detail_Activity extends AppCompatActivity {
                     realm.beginTransaction();
                     Food foodRealm = realm.copyToRealm(food);
                     realm.commitTransaction();
-                    Toast.makeText(this, "Favourite", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Added to your Favourite Food!",
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     food.setFavorite(false);
                     item.setIcon(R.drawable.ic_favorite_border_white_24dp);
@@ -138,6 +157,36 @@ public class Food_Detail_Activity extends AppCompatActivity {
         if (rs.size() > 0)
             return true;
         return false;
+    }
+
+    public static String getYoutubeVideoId(String youtubeUrl)
+    {
+        String video_id="";
+        if (youtubeUrl != null && youtubeUrl.trim().length() > 0 && youtubeUrl.startsWith("http"))
+        {
+
+            String expression = "^.*((youtu.be"+ "\\/)" + "|(v\\/)|(\\/u\\/w\\/)|(embed\\/)|(watch\\?))\\??v?=?([^#\\&\\?]*).*"; // var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            CharSequence input = youtubeUrl;
+            Pattern pattern = Pattern.compile(expression,Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(input);
+            if (matcher.matches())
+            {
+                String groupIndex1 = matcher.group(7);
+                if(groupIndex1!=null && groupIndex1.length()==11)
+                    video_id = groupIndex1;
+            }
+        }
+        return video_id;
+    }
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+        youTubePlayer.cueVideo(keyVideo);
+    }
+
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider,
+                                        YouTubeInitializationResult youTubeInitializationResult) {
+
     }
 }
 

@@ -16,30 +16,24 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.io.IOException;
+import com.victor.loading.rotate.RotateLoading;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class ListFood_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    static String hottestFood = "";
-    public OkHttpClient client2 = new OkHttpClient();
     ActionBarDrawerToggle mToggle;
     DrawerLayout mDrawerLayout;
     TabLayout tabLayout;
     ViewPager viewPager;
+    static RotateLoading rotateLoading;
     int[] tabIcons = {
             R.drawable.ic_home_white_24dp,
             R.drawable.ic_search_white_24dp,
-            R.drawable.ic_whatshot_white_24dp,
+            R.drawable.baseline_dashboard_white_24dp,
             R.drawable.ic_favorite_white_24dp_2
     };
 
@@ -48,34 +42,25 @@ public class ListFood_Activity extends AppCompatActivity implements NavigationVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_food_);
 
-//        Toast.makeText(this,MainActivity.data,Toast.LENGTH_LONG).show();
+        Realm.init(this);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        rotateLoading = (RotateLoading) findViewById(R.id.rotateloading);
+
+        //Handling ViewPager
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        addTabs(viewPager);
 
 
-            try {
-                getHottestFoodFromURL();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-            mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-            mDrawerLayout.addDrawerListener(mToggle);
-            mToggle.syncState();
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-            navigationView.setNavigationItemSelectedListener(this);
-
-            //Handling ViewPager
-            viewPager = (ViewPager) findViewById(R.id.viewpager);
-            addTabs(viewPager);
-
-
-            tabLayout = (TabLayout) findViewById(R.id.tabs);
-            tabLayout.setupWithViewPager(viewPager);
-            setupTabIcons();
-
-//            Toast.makeText(this, HomeFragment.listFood.size(),Toast.LENGTH_LONG).show();
-
-
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
     }
 
     private void setupTabIcons() {
@@ -89,7 +74,7 @@ public class ListFood_Activity extends AppCompatActivity implements NavigationVi
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new HomeFragment());
         adapter.addFrag(new SearchFragment());
-        adapter.addFrag(new HotMealFragment());
+        adapter.addFrag(new CategoryFragment());
         adapter.addFrag(new FavouriteFragment());
         viewPager.setAdapter(adapter);
     }
@@ -114,34 +99,6 @@ public class ListFood_Activity extends AppCompatActivity implements NavigationVi
         public void addFrag(Fragment fragment) {
             mFragmentList.add(fragment);
         }
-    }
-
-    public void getHottestFoodFromURL() throws IOException {
-        final Request request = new Request.Builder()
-                .url("https://www.themealdb.com/api/json/v1/1/random.php")
-                .build();
-        client2.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                runOnUiThread(new Runnable() {
-                                  @Override
-                                  public void run() {
-                                      try {
-                                          hottestFood = response.body().string();
-                                      } catch (IOException i) {
-                                          i.printStackTrace();
-                                      }
-                                  }
-                              }
-                );
-            }
-
-        });
     }
 
     @Override

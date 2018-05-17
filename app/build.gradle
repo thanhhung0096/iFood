@@ -16,6 +16,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { java.srcDirs = ['src/main/java', 'src/main/java/Libs'] } }
 }
 
 dependencies {
@@ -33,7 +34,7 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     compile 'com.github.traex.expandablelayout:library:1.2.2'
     implementation 'com.victor:lib:1.0.4'
-
+    implementation files('YouTubeAndroidPlayerApi.jar')
 }
 realm {
     syncEnabled = true;

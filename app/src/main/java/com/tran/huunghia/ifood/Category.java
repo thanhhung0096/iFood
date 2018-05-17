@@ -1,14 +1,21 @@
 package com.tran.huunghia.ifood;
 
+import java.io.Serializable;
+
+import io.realm.RealmObject;
+
 /**
  * Created by Thanh Hung on 5/15/2018.
  */
 
-public class Category{
+public class Category implements Serializable {
     private int idCategory;
     private String strCategory;
     private String strCategoryDescription;
     private String strCategoryThumb;
+
+    public Category() {
+    }
 
     public Category(int idCategory, String strCategory, String strCategoryDescription, String strCategoryThumb) {
         this.idCategory = idCategory;

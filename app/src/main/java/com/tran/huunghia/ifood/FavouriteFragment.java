@@ -40,16 +40,6 @@ public class FavouriteFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_favourite, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.simpleSwipeRefreshLayoutFavourite);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_favourite);
-//        recyclerView.setHasFixedSize(true);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),
-//                LinearLayoutManager.VERTICAL, false);
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//
-//        //Custom Design View in Layout Manager
-//        DividerItemDecoration dividerItemDecoration = new
-//                DividerItemDecoration(getActivity(),
-//                linearLayoutManager.getOrientation());
-//        recyclerView.addItemDecoration(dividerItemDecoration);
 
         // set a GridLayoutManager with default vertical orientation and 2 number of columns
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);

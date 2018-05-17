@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -28,7 +28,7 @@
         <activity
             android:name=".Food_Detail_Activity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".test_category"></activity>
+        <activity android:name=".CategoryDetail" />
     </application>
 
 </manifest>

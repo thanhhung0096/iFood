@@ -3,7 +3,6 @@ package com.tran.huunghia.ifood;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,9 +13,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
@@ -65,10 +61,7 @@ public class Food_Adapter extends RecyclerView.Adapter<Food_Adapter.ViewHolder> 
             image = (ImageView) itemView.findViewById(R.id.imgMeal);
             tvName = (TextView) itemView.findViewById(R.id.tvNameMeal);
             tvArea = (TextView) itemView.findViewById(R.id.tvArea);
-
         }
-
-
         @Override
         public void onClick(View view) {
             int position = getLayoutPosition();
@@ -78,46 +71,5 @@ public class Food_Adapter extends RecyclerView.Adapter<Food_Adapter.ViewHolder> 
             context.startActivity(i);
         }
     }
-            //Handle ingredient array to intent Food_Detail_Activity
-//            String ingredients = "";
-//            for (int i = 1; i < 21; i++) {
-//                String nameMethod = "getStrIngredient" + i;
-//                try {
-//                    Method m = food.getClass().getMethod(nameMethod);
-//                    String ingredient = (String) m.invoke(food);
-//                    if (ingredient.equals("")) {
-//                        break;
-//                    }
-//                    if (i==1){
-//                        ingredients += ingredient;
-//                        continue;
-//                    }
-//                    ingredients += ", " + ingredient;
-//
-//                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//            openDetailActivity(food.getStrMeal(), food.getStrMealThumb(), ingredients,
-//                    food.getStrInstructions(), food.getStrArea(), food.getStrCategory());
-//        }
-//    }
-
-//    private void openDetailActivity(String nameMeal, String imageMeal, String Ingredient, String instructions, String Area, String category) {
-//        Intent i = new Intent(context, Food_Detail_Activity.class);
-//        //detailActivity.putExtra("result", Parcels.wrap(result));
-//        //PACK DATA TO SEND
-//        i.putExtra("name", nameMeal);
-//        i.putExtra("image", imageMeal);
-//        i.putExtra("ingredients", Ingredient);
-//        i.putExtra("instructions", instructions);
-//        i.putExtra("area", Area);
-//        i.putExtra("category", category);
-//
-//        //open activity
-//        context.startActivity(i);
-//
-//    }
 }
 

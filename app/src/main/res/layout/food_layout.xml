@@ -11,20 +11,23 @@
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:scaleType="fitXY"/>
+        android:scaleType="centerCrop"/>
     <TextView
         android:id="@+id/tvNameMeal"
         android:layout_below="@+id/imgMeal"
         android:textSize="20sp"
+        android:fontFamily="sans-serif"
         android:textColor="#ff0000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textStyle="italic"
         android:singleLine="true"/>
     <TextView
         android:id="@+id/tvArea"
         android:layout_below="@+id/tvNameMeal"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:textColor="#0b19e6"
+        android:fontFamily="cursive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </RelativeLayout>

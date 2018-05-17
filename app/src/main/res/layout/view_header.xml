@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:padding="10dp"
+        android:textStyle="italic"
         android:textColor="@android:color/white"
         android:text="ExpandableLayout Header!"
         android:drawableStart="@drawable/ic_turned_in_not_white_24dp"/>
