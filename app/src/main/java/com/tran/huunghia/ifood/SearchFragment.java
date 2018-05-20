@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -89,6 +90,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             public void onClick(View v) {
 //                int pos = spinner.getSelectedItemPosition();
 //                Toast.makeText(getContext(), String.valueOf(pos),Toast.LENGTH_LONG).show();
+                final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                 Search();
             }
         });

@@ -1,11 +1,13 @@
 package com.tran.huunghia.ifood;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,8 +18,14 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.regex.Matcher;
@@ -25,6 +33,9 @@ import java.util.regex.Pattern;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class Food_Detail_Activity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
 //    ImageView imageMeal;
@@ -37,6 +48,8 @@ public class Food_Detail_Activity extends AppCompatActivity implements YouTubePl
     String category;
     Food food;
     Intent i;
+    YouTubePlayerSupportFragment frag;
+    YouTubePlayer mYouTubePlayer;
     private final String[] array = {" Ingredients", " Instructions", " Area", " Category"};
     private final String[] arrayTemp = new String[4];
 
@@ -45,16 +58,28 @@ public class Food_Detail_Activity extends AppCompatActivity implements YouTubePl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food__detail_);
-
-        YouTubePlayerSupportFragment frag =
-                (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtubeView);
+        frag = (YouTubePlayerSupportFragment) getSupportFragmentManager().findFragmentById(R.id.youtubeView);
         frag.initialize( API_KEY, this);
+
 
         i = this.getIntent();
         food = (Food) i.getSerializableExtra("food");
+        try {
+            food.getStrYoutube();
+            Init_View(food);
+            mYouTubePlayer.cueVideo(getYoutubeVideoId(food.getStrYoutube()));
+        }
+        catch (Exception e)
+        {
+            String url = "https://www.themealdb.com/api/json/v1/1/search.php?s=" + food.getStrMeal();
+            new OkHttpHandler().execute(url);
+            e.printStackTrace();
+        }
 
-        keyVideo = getYoutubeVideoId(food.getStrYoutube());
+    }
 
+    public void Init_View(Food food)
+    {
 
         food.setFavorite(checkFavorited(food));
 //        youTubePlayerView = (YouTubePlayerView) findViewById(R.id.youtubeView);
@@ -102,6 +127,55 @@ public class Food_Detail_Activity extends AppCompatActivity implements YouTubePl
         }
     }
 
+    private class OkHttpHandler extends AsyncTask<String, Void, String> {
+
+        OkHttpClient client = new OkHttpClient();
+
+        @Override
+        protected void onPreExecute(){
+            ListFood_Activity.rotateLoading.start();
+        }
+
+        @Override
+        protected String doInBackground(String... url) {
+
+            final Request request = new Request.Builder()
+                    .url(url[0])
+                    .build();
+            Response response = null;
+            try {
+                response = client.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Gson gson = new Gson();
+            Food f = new Food();
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                JSONArray jsonArray = jsonObject.getJSONArray("meals");
+                f = gson.fromJson(jsonArray.get(0).toString(),Food.class);
+                Init_View(f);
+                mYouTubePlayer.cueVideo(getYoutubeVideoId(f.getStrYoutube()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+//            Toast.makeText(Food_Detail_Activity.this, f.getStrYoutube(), Toast.LENGTH_LONG).show();
+
+            if (s.equals("{\"meals\":null}")) {
+                Toast.makeText(Food_Detail_Activity.this, "Meal not found", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.action_bar, menu);
@@ -180,12 +254,28 @@ public class Food_Detail_Activity extends AppCompatActivity implements YouTubePl
     }
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-        youTubePlayer.cueVideo(keyVideo);
+        mYouTubePlayer = youTubePlayer;
+
     }
 
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider,
                                         YouTubeInitializationResult youTubeInitializationResult) {
+        if (youTubeInitializationResult.isUserRecoverableError())
+        {
+            youTubeInitializationResult.getErrorDialog(Food_Detail_Activity.this, 100);
+        }
+        else
+        {
+            Toast.makeText(this,"Error!" ,Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100)
+            frag.initialize( API_KEY, this);
 
     }
 }
