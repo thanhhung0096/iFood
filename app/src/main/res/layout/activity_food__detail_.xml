@@ -49,6 +49,7 @@
             android:id="@+id/expanded_list_view"
             android:layout_below="@+id/food_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="fill_parent"
+            android:background="#a52828"/>
     </RelativeLayout>
 </LinearLayout>

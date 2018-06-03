@@ -13,5 +13,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMyApp</item>
         <item name="colorAccent">@color/colorAccentMyApp</item>
     </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
 </resources>

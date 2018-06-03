@@ -57,7 +57,6 @@ public class ListFood_Activity extends AppCompatActivity implements NavigationVi
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         addTabs(viewPager);
 
-
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
@@ -110,15 +109,13 @@ public class ListFood_Activity extends AppCompatActivity implements NavigationVi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         Intent i = new Intent(this, ListFood_Activity.class);
+        Intent iSchedule = new Intent(this, ListFood_Schedule.class);
         switch (id) {
             case R.id.home:
                 startActivity(i);
                 break;
-            case R.id.collection:
-                //TODO: Downloaded video will put here
-                break;
             case R.id.schedule:
-
+                startActivity(iSchedule);
                 break;
             case R.id.about:
                 Toast.makeText(this, "Nhom 5", Toast.LENGTH_SHORT).show();

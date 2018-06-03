@@ -2,24 +2,19 @@ package com.tran.huunghia.ifood;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andexert.expandablelayout.library.ExpandableLayoutListView;
-import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -82,6 +78,7 @@ public class Food_Detail_Activity extends AppCompatActivity implements YouTubePl
     {
 
         food.setFavorite(checkFavorited(food));
+        food.setSchedule(checkSchedule(food));
 //        youTubePlayerView = (YouTubePlayerView) findViewById(R.id.youtubeView);
 
         foodName = (TextView) findViewById(R.id.food_name);
@@ -184,6 +181,9 @@ public class Food_Detail_Activity extends AppCompatActivity implements YouTubePl
         if (food.isFavorite()) {
             menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_white_24dp);
         }
+        if(food.isSchedule()){
+            menu.findItem(R.id.action_timePicker).setIcon(R.drawable.ic_time_picker_sub);
+        }
         return true;
     }
 
@@ -218,10 +218,42 @@ public class Food_Detail_Activity extends AppCompatActivity implements YouTubePl
                 }
 
                 break;
+            case R.id.action_timePicker:
+
+                if(food.isSchedule())
+                {
+                    item.setIcon(R.drawable.ic_time_picker);
+                    food.setSchedule(false);
+
+                    //delete from realm
+                    Realm realm = Realm.getInstance(new RealmConfiguration.Builder().name("schedule").build());
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            RealmResults<Food> rs = realm.where(Food.class).equalTo("idMeal", food.getIdMeal()).findAll();
+                            rs.deleteAllFromRealm();
+                        }
+                    });
+                }
+                else
+                {
+                    Intent intent = new Intent(this, Schedule_Activity.class);
+                    intent.putExtra("food", food);
+                    startActivity(intent);
+                }
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+    public boolean checkSchedule(Food f) {
+        Realm.init(this);
+        Realm r = Realm.getInstance(new RealmConfiguration.Builder().name("schedule").build());
+        RealmResults<Food> rs = r.where(Food.class).equalTo("idMeal", f.getIdMeal()).findAll();
+        if (rs.size() > 0)
+            return true;
+        return false;
     }
 
     public boolean checkFavorited(Food f) {

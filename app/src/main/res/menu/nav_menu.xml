@@ -5,10 +5,6 @@
     <item
         android:id="@+id/home"
         android:title="Home" />
-    <!--TODO:Video Downloaded will put here-->
-    <item
-        android:id="@+id/collection"
-        android:title="Collection" />
     <!--TODO:Make schedule meals for cook-->
     <item
         android:id="@+id/schedule"

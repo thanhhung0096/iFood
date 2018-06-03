@@ -15,6 +15,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
+
 /**
  * Created by user on 29/04/2018.
  */
@@ -42,6 +46,9 @@ public class Food_Adapter extends RecyclerView.Adapter<Food_Adapter.ViewHolder> 
         Picasso.get().load(listFood.get(position).getStrMealThumb()).into(holder.image);
         holder.tvName.setText(listFood.get(position).getStrMeal());
         holder.tvArea.setText(listFood.get(position).getStrArea());
+        if (checkSchedule(listFood.get(position))) {
+            holder.tvDateSchedule.setText("Scheduled on: " + listFood.get(position).getTimeSchedule());
+        }
 
     }
 
@@ -50,10 +57,23 @@ public class Food_Adapter extends RecyclerView.Adapter<Food_Adapter.ViewHolder> 
         return listFood.size();
     }
 
+    public boolean checkSchedule(Food f) {
+        Realm.init(context);
+        Realm r = Realm.getInstance(new RealmConfiguration.Builder().name("schedule").build());
+        RealmResults<Food> rs = r.where(Food.class).equalTo("idMeal", f.getIdMeal()).findAll();
+        if (rs.size() > 0) {
+            f.setTimeSchedule(rs.get(0).getTimeSchedule());
+            return true;
+        }
+        return false;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvName;
         TextView tvArea;
+        TextView tvDateSchedule;
         ImageView image;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -61,7 +81,9 @@ public class Food_Adapter extends RecyclerView.Adapter<Food_Adapter.ViewHolder> 
             image = (ImageView) itemView.findViewById(R.id.imgMeal);
             tvName = (TextView) itemView.findViewById(R.id.tvNameMeal);
             tvArea = (TextView) itemView.findViewById(R.id.tvArea);
+            tvDateSchedule = (TextView) itemView.findViewById(R.id.tvTimeSchedule);
         }
+
         @Override
         public void onClick(View view) {
             int position = getLayoutPosition();

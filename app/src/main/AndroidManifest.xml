@@ -3,7 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tran.huunghia.ifood">
 
+    <uses-sdk android:minSdkVersion="21" />
+
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -29,6 +41,8 @@
             android:name=".Food_Detail_Activity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".CategoryDetail" />
+        <activity android:name=".Schedule_Activity" />
+        <activity android:name=".ListFood_Schedule"></activity>
     </application>
 
 </manifest>

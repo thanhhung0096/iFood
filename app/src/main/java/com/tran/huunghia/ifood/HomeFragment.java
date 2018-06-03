@@ -164,7 +164,6 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... url) {
-
             final Request request = new Request.Builder()
                     .url(url[0])
                     .build();
